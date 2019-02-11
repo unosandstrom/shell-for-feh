@@ -49,17 +49,17 @@ class Window(Frame):
         self.pack(fill=BOTH, expand=1)
 
         # skapa en ram för val av fotoinformation
-        vram = LabelFrame(self, width=300, height=800)
+        vram = LabelFrame(self, width=300, height=900)
         vram.place(x=10, y=10)
         vram.pack_propagate(False) 
 
         # skapa en ram för val av år
-        fram = LabelFrame(self, width=300, height=800)
+        fram = LabelFrame(self, width=300, height=900)
         fram.place(x=310, y=10)
         fram.pack_propagate(False) 
 
         # skapa en ram för val av semster
-        sram = LabelFrame(self, width=300, height=800)
+        sram = LabelFrame(self, width=300, height=900)
         sram.place(x=610, y=10)
         sram.pack_propagate(False) 
 
@@ -92,6 +92,7 @@ class Window(Frame):
         val215 = IntVar()
         val216 = IntVar()
         val217 = IntVar()
+        val218 = IntVar()
 
         val301 = IntVar()
         val302 = IntVar()
@@ -101,6 +102,7 @@ class Window(Frame):
         val306 = IntVar()
         val307 = IntVar()
         val308 = IntVar()
+        val309 = IntVar()
 
         val401 = IntVar()
         val402 = IntVar()
@@ -123,6 +125,7 @@ class Window(Frame):
         C101 = Checkbutton(vram, text = "Bildspel", variable = val101, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)
         C102 = Checkbutton(vram, text = "Demo", variable = val102, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)            
         #fram = årsval
+        C218 = Checkbutton(fram, text = "Senaste", variable = val218, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)
         C201 = Checkbutton(fram, text = "2019", variable = val201, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)
         C202 = Checkbutton(fram, text = "2018", variable = val202, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)
         C203 = Checkbutton(fram, text = "2017", variable = val203, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)
@@ -150,6 +153,7 @@ class Window(Frame):
         C306 = Checkbutton(vram, text = "ISO", variable = val306, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)
         C307 = Checkbutton(vram, text = "Slutartid", variable = val307, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)
         C308 = Checkbutton(vram, text = "Bländare", variable = val308, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)
+        C309 = Checkbutton(vram, text = "Exposure Bias", variable = val309, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)
 
         #sram = semesterram
         C401 = Checkbutton(sram, text = "Rom 2003", variable = val401, onvalue = 1, offvalue = 0, height=2, width = 20, anchor=W)
@@ -173,6 +177,7 @@ class Window(Frame):
         #presentationsordning i respektive ram
         C101.pack()
 
+        C218.pack()
         C201.pack()
         C202.pack()
         C203.pack()
@@ -199,6 +204,7 @@ class Window(Frame):
         C307.pack()
         C308.pack()
         C304.pack()
+        C309.pack()
         C102.pack()
 
         C417.pack()
@@ -227,9 +233,10 @@ class Window(Frame):
                                                                 val205.get(),val206.get(),val207.get(),val208.get(),
                                                                 val209.get(),val210.get(),val211.get(),val212.get(),
                                                                 val213.get(),val214.get(),val215.get(),val216.get(),
-                                                                val217.get(),
+                                                                val217.get(),val218.get(),
                                                                 val301.get(),val302.get(),val303.get(),val304.get(),
                                                                 val305.get(),val306.get(),val307.get(),val308.get(),
+                                                                val309.get(),
                                                                 val401.get(),val402.get(),val403.get(),val404.get(),
                                                                 val405.get(),val406.get(),val407.get(),val408.get(),
                                                                 val409.get(),val410.get(),val411.get(),val412.get(),
@@ -243,7 +250,7 @@ class Window(Frame):
 
 
     # skriv till en info-fil som öppnas i programmet feh_info.py
-    def skapaInfofil(self,v301,v302,v303,v304,v305,v306,v307,v308,v102):
+    def skapaInfofil(self,v301,v302,v303,v304,v305,v306,v307,v308,v309,v102):
         infostr = ""
 
         if v301 == 1: infostr = "datum\n" 
@@ -270,6 +277,9 @@ class Window(Frame):
         if v308 == 1: infostr = infostr + "bländare\n"
         else: infostr = infostr + "inget\n"
 
+        if v309 == 1: infostr = infostr + "exposure_bias\n"
+        else: infostr = infostr + "inget\n"
+
         if v102 == 1: infostr = infostr + "demo\n"
         else: infostr = infostr + "inget\n"
 
@@ -281,16 +291,18 @@ class Window(Frame):
 
     # starta FEH med ett anpassat startscrip
     def skapa_FEH_fil(self,v101,v102,
-                      v201,v202,v203,v204,v205,v206,v207,v208,v209,v210,v211,v212,v213,v214,v215,v216,v217,
-                      v301,v302,v303,v304,v305,v306,v307,v308,
+                      v201,v202,v203,v204,v205,v206,v207,v208,v209,v210,v211,v212,v213,v214,v215,v216,v217,v218,
+                      v301,v302,v303,v304,v305,v306,v307,v308,v309,
                       v401,v402,v403,v404,v405,v406,v407,v408,v409,v410,v411,v412,v413,v414,v415,v416,v417):
         fehstr = "feh --hide-pointer --borderless --fullscreen --zoom max --draw-tinted --auto-rotate --recursive"
+
+        if v218 == 1: fehstr = fehstr + " --reverse"
 
         if ((v101 == 1) and (v102 == 1)):
             fehstr = fehstr + " --slideshow-delay 2 "
         elif ((v101 == 1) and (v102 == 0)):
             fehstr = fehstr + " --slideshow-delay 6 "
-
+       
         if v201 == 1: fehstr = fehstr + " --start-at /home/uno/serverfoto/2019/*.*" 
         if v202 == 1: fehstr = fehstr + " --start-at /home/uno/serverfoto/2018/*.*"
         if v203 == 1: fehstr = fehstr + " --start-at /home/uno/serverfoto/2017/*.*" 
@@ -326,13 +338,14 @@ class Window(Frame):
         if v416 == 1: fehstr = fehstr + " --start-at /home/uno/serverfoto/2018/'2018-04-19 12.00.00.jpg'" 
         if v417 == 1: fehstr = fehstr + " --start-at /home/uno/serverfoto/2018/'2018-09-18 18.29.56.jpg'" 
  
-        if "start-at" not in fehstr: fehstr = fehstr + "  --randomize"
+        if (("start-at" not in fehstr) and (v218 == 0)): fehstr = fehstr + "  --randomize"
         
-        if ((v301 == 1) or (v302 == 1) or (v303 == 1) or (v304 == 1) or (v305 == 1) or (v306 == 1) or (v307 == 1) or (v308 == 1)): 
+        if ((v301 == 1) or (v302 == 1) or (v303 == 1) or (v304 == 1) or (v305 == 1) or (v306 == 1) or (v307 == 1) or (v308 == 1)
+             or (v309 == 1)): 
              fehstr = fehstr + ' --info "python3 feh_info.py %F"'
         fehstr = fehstr + " /home/uno/serverfoto/*/*.*"
 
-        self.skapaInfofil(v301,v302,v303,v304,v305,v306,v307,v308,v102)
+        self.skapaInfofil(v301,v302,v303,v304,v305,v306,v307,v308,v309,v102)
      
         os.system(fehstr)
         print (fehstr)
@@ -344,7 +357,7 @@ class Window(Frame):
 # "root window" skapas, det är det enda fönstret men det går att skapa fler fönster inuti detta
 root = Tk()
 
-root.geometry("900x800")
+root.geometry("900x900")
 
 #skapa en instans
 app = Window(root)

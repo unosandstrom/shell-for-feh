@@ -42,6 +42,9 @@ slutartid = slutartid.strip()
 blandare = fo.readline()
 blandare = blandare.strip()
 
+bias = fo.readline()
+bias = bias.strip()
+
 demo = fo.readline()
 demo = demo.strip()
 
@@ -58,19 +61,17 @@ fotodatum = fotodatum.split('.')[0]
 if datum == "datum": print (fotodatum)
 
 
-
 #Skriv ut ort, information hämtas från filen fototext.txt som ligger ihop fotofilerna
 if ort == "ort": 
-    txtdatum = ""
-    uttxt = ""
-    import codecs
+    txtdatum = "1900-01-01"
+    uttxt = "-"
     a = open("/home/uno/serverfoto/fototext.txt", "r")
-    while (txtdatum < fotodatum):
+    while (txtdatum <= fotodatum):
         line = a.readline()
         txtdatum, txt = line.split(",")
-        if (txtdatum <= fotodatum): uttxt = txt
+        if (fotodatum == txtdatum): uttxt = txt
     fo.close()
-    print(uttxt) 
+    print(uttxt)
 
 
 
@@ -115,6 +116,15 @@ bild = sys.argv[1]
 if blixt == "blixt": 
     print('Blixt: ', end='', flush=True)
     exifstr = "exiftool -exif:Flash -s3 '" + bild +"'"
+    os.system(exifstr)
+
+
+
+# Skriv ut bias information hämtas från programmet exiftool som måste installeras
+bild = sys.argv[1]
+if bias == "exposure_bias": 
+    print('Exp_bias: ', end='', flush=True)
+    exifstr = "exiftool -exif:ExposureCompensation -s3 '" + bild +"'"
     os.system(exifstr)
 
 
